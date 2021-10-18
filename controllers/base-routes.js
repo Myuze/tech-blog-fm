@@ -3,7 +3,9 @@ const { Blog } = require('../models');
 
 router.get('/', async (req, res) => {
   try {
-    const blogData = Blog.findAll();
+    const blogData = await Blog.findAll();
+
+    console.log(blogData)
 
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
     res.status(200).render('home', { blogs });

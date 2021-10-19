@@ -5,10 +5,27 @@
         </div>
         <div class="card-body mb-3">
             <h1 class="card-title">Welcome to Tech Blog FM</h1>
+            {{#unless loggedIn}}
             <p class="card-text">Login to post a blog.</p>
+            {{/unless}}
         </div>
     </div>
+    {{#unless loggedIn}}
     <div class="d-grid gap-2 col-6 mt-5 mx-auto">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" type="button">Login</button>
+        <button id="homeLoginBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" type="button">Login</button>
+    </div>
+    {{/unless}}
+</section>
+<section>
+    <div class="d-grid col12">
+        <h2 class="mt-3 p-3">Latest Posts</h2>
+        {{#if loggedIn}}
+        <a href="#" class="btn btn-primary d-grid gap-2 col-6 mt-3 mx-auto">New Post</a>
+        {{/if}}
+    </div>
+    <div class="mt-3 post-container">
+        {{#each blogs as |blog| }}
+        {{> post }}
+        {{/each}}
     </div>
 </section>

@@ -7,7 +7,7 @@
     "start": "node server.js",
     "watch": "nodemon server.js",
     "sass-w": "sass --watch scss:public/css",
-    "seed": "node seed/seed.js"
+    "seed": "node seeds/seed.js"
   },
   "repository": {
     "type": "git",

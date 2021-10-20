@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { Blog, User } = require('../../models');
 
-const withAuth = require('../../utils/auth');
+const { apiAuth } = require('../../utils/auth');
 
-router.get('/', withAuth, async (req, res) => {
+router.get('/', apiAuth, async (req, res) => {
+	console.log(req.session)
 	try {
 		const dbBlogData = await Blog.findAll({
 			include: {
@@ -22,7 +23,7 @@ router.get('/', withAuth, async (req, res) => {
 	}
 });
 
-router.post('/post', withAuth, async (req, res) => {
+router.post('/post', apiAuth, async (req, res) => {
 	try {
 		const newPost = await Blog.create({
 			title: req.body.title,
@@ -40,7 +41,7 @@ router.post('/post', withAuth, async (req, res) => {
 });
 
 // Get Blog post by id
-router.get('/:id', withAuth, async (req, res) => {
+router.get('/:id', apiAuth, async (req, res) => {
 	try {
 		const dbBlogPost = await Blog.findOne({
 			where: {
@@ -63,7 +64,7 @@ router.get('/:id', withAuth, async (req, res) => {
 });
 
 // Post Comments to Blog Post
-router.post('/:id', withAuth, async (req, res) => {
+router.post('/:id', apiAuth, async (req, res) => {
   try {
       const commentData = await Comment.create({
         content: req.body.content,

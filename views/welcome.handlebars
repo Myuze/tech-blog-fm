@@ -23,7 +23,7 @@
         <button id="homeNewPostBtn" class="btn btn-primary d-grid gap-2 col-6 mt-3 mx-auto" data-bs-toggle="modal" data-bs-target="#postModal">New Post</button>
         {{/if}}
     </div>
-    <div class="mt-3 post-container">
+    <div class="d-flex flex-column-reverse mt-3 post-container">
         {{#each blogs as |blog| }}
         {{> post }}
         {{/each}}

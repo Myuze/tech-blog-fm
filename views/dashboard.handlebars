@@ -1,0 +1,42 @@
+{{!-- Post Page --}}
+<section class="d-flex flex-column-reverse">
+  <div class="card fade" id="postPage" tabindex="-1" aria-labelledby="postPageLabel" aria-hidden="true">
+    <div class="card-dialog">
+      <div class="card-content">
+        <div class="card-header">
+          <h5 class="card-title" id="postPageLabel">Create a New Post</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <label for="userPost" class="form-label">User:</label>
+              <input type="text" class="form-control" id="userPost" value="{{ username }}"></input>
+            </div>
+            <div class="mb-3">
+              <label for="postTitle" class="form-label">Title:</label>
+              <input type="text" class="form-control" id="postTitle"></input>
+            </div>
+            <div class="mb-3">
+              <label for="inputContent" class="form-label">Content</label>
+              <textarea type="text" class="form-control" id="inputContent"></textarea>
+            </div>
+            <div>
+              <p id="cardResult"></p>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button id="postCancel" type="button" class="btn btn-secondary" data-bs-dismiss="card">Cancel</button>
+          <button id="postSubmit" type="submit" class="btn btn-primary">Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="d-flex flex-column-reverse mt-3 post-container">
+    {{#each blogs as |blog|}}
+    {{> post }}
+    {{/each}}
+  </div>
+</section>

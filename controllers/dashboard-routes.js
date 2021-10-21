@@ -15,10 +15,10 @@ router.get('/', withAuth, async (req, res) => {
 
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
-    res.status(200).render('welcome', { blogs, loggedIn });
+    res.status(200).render('dashboard', { blogs, loggedIn });
   } catch (err) {
     console.log(err)
-    res.status(500).render('error', { code: 404 });
+    res.status(500).render('error', { code: 500 });
   }
 });
 
@@ -30,7 +30,7 @@ router.post('/post', async (req, res) => {
     })
   } catch (err) {
     console.log(err);
-    res.status(500).render('500');
+    res.status(500).render('error', { code: 500 });
   }
 });
 

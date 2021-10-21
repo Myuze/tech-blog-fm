@@ -1,14 +1,16 @@
 const router = require('express').Router();
-const { Blog, User } = require('../../models');
+const { Blog, User, Comment } = require('../../models');
 
 const { apiAuth } = require('../../utils/auth');
 
+// Get all Blog Posts
 router.get('/', apiAuth, async (req, res) => {
 	try {
 		const dbBlogData = await Blog.findAll({
 			include: {
 				model: User,
-				attributes: ['id', 'username']
+				as: 'Blogger',
+				attributes: ['id', 'username', 'email']
 			}
 		});
 
@@ -22,12 +24,13 @@ router.get('/', apiAuth, async (req, res) => {
 	}
 });
 
+// Create Blog Posts
 router.post('/post', apiAuth, async (req, res) => {
 	try {
 		const newPost = await Blog.create({
 			title: req.body.title,
 			content: req.body.content,
-			user_id: req.body.user_id
+			author_id: req.body.author_id
 		});
 		
 		res.status(200).json(newPost);
@@ -47,8 +50,9 @@ router.get('/:id', apiAuth, async (req, res) => {
 				id: req.params.id
 			},
 			include: {
-				model: Comment,
-				model: User
+				model: User,
+				as: 'Blogger',
+				attributes: ['id', 'username', 'email']
 			}
 		});
 
@@ -62,23 +66,158 @@ router.get('/:id', apiAuth, async (req, res) => {
 	}
 });
 
+// Update Blog
+router.put('/:id', apiAuth, async (req, res) => {
+	try {
+		const blog = await Blog.update(req.body, {
+			where: {
+				id: req.params.id
+			}
+		});
+
+		if (!blog[0]) {
+			res.status(404).json({ message: 'No blog found with this id!'});
+			return;
+		}
+
+		res.status(200).json(blog);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			message: 'Internal Server Error',
+			error: err
+		});
+	}
+});
+
+// Delete Blog
+router.delete('/:id', apiAuth, async (req, res) => {
+	try {
+		const blog = await Blog.destroy({
+			where: {
+				id: req.params.id
+			}
+		});
+
+		if(!blog) {
+			res.status(404).json({ message: 'No blog found with this id!' });
+			return;
+		}
+
+		res.status(200).json(blog);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json(err)
+	}
+});
+
+// Get Comments
+router.get('/comments', apiAuth, async (req, res) => {
+	try {
+		const comment = await Comment.findAll({
+			include: {
+				model: User,
+				as: 'Commenter',
+				attributes: ['id', 'username', 'email']
+			}
+		});
+
+		res.status(200).json(comment);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			message: 'Internal Server Error.',
+			error: err
+		});
+	}
+});
+
 // Post Comments to Blog Post
-router.post('/:id', apiAuth, async (req, res) => {
+router.post('/comment', apiAuth, async (req, res) => {
   try {
-      const commentData = await Comment.create({
-        content: req.body.content,
-        blog_id: req.body.blog_id,
-        author_id: req.session.user_id,
-      });
-      res.status(200).json(commentData);
-    
+		const commentData = await Comment.create({
+			content: req.body.content,
+			blog_id: req.body.blog_id,
+			author_id: req.body.author_id,
+		});
+
+		res.status(200).json(commentData);
   } catch (err) {
     console.log(err);
-		res.status(400).json({
+		res.status(500).json({
 			message: 'Internal Server Error',
 			error: err
 		});
   }
+});
+
+// Get Comment by id
+router.get('/comment/:id', apiAuth, async (req, res) => {
+	try {
+		const comment = await Comment.findOne({
+			where: {
+				id: req.params.id
+			},
+			include: {
+				model: User,
+				as: 'Commenter',
+				attributes: ['id', 'username', 'email']
+			}
+		});
+
+    res.status(200).json(comment);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			message: 'Internal Server Error',
+			error: err
+		});
+	}
+});
+
+// Update Comment
+router.put('/comment/:id', apiAuth, async (req, res) => {
+	try {
+		const comment = await Comment.update(req.body, {
+			where: {
+				id: req.params.id
+			}
+		});
+
+		if (!comment[0]) {
+			res.status(404).json({ message: 'No comment found with this id!'});
+			return;
+		}
+
+		res.status(200).json(comment);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			message: 'Internal Server Error',
+			error: err
+		});
+	}
+});
+
+// Delete Comment
+router.delete('/comments/:id', apiAuth, async (req, res) => {
+	try {
+		const comment = await Comment.destroy({
+			where: {
+				id: req.params.id
+			}
+		});
+
+		if(!comment) {
+			res.status(404).json({ message: 'No comment found with this id!' });
+			return;
+		}
+
+		res.status(200).json(comment);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json(err)
+	}
 });
 
 module.exports = router;

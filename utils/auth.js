@@ -28,7 +28,7 @@ const apiAuth = async (req, res, next) => {
     }
 
     const validPassword = await dbUserData.checkPass(password);
-    console.log(validPassword)
+
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect email or password. Please try again!' });
       return;

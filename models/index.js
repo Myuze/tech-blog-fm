@@ -4,20 +4,22 @@ const Comment = require('./Comment');
 
 User.hasMany(Blog, {
   foreignKey: 'author_id',
-  onDelete: 'SET NULL'
 });
 
 Blog.belongsTo(User, {
-  foreignKey: 'author_id'
-});
-
-User.hasMany(Comment, {
+  as: 'Blogger',
   foreignKey: 'author_id',
   onDelete: 'SET NULL'
 });
 
+User.hasMany(Comment, {
+  foreignKey: 'author_id',
+});
+
 Comment.belongsTo(User, {
-  foreignKey: 'author_id'
+  as: 'Commenter',
+  foreignKey: 'author_id',
+  onDelete: 'SET NULL'
 });
 
 Blog.hasMany(Comment, {

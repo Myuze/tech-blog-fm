@@ -19,6 +19,7 @@ const sess = {
   store: new SequelizeStore({
     db: sequelize,
   }),
+  maxAge: 60000
 };
 
 app.use(session(sess));

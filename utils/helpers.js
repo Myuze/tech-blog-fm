@@ -1,5 +1,6 @@
 module.exports = {
     if_first: (index) => (index === 0) ? true : false,
+    format_created: (date) => date.toLocaleDateString(),
     parse_err_code: (code) => {
       switch (code) {
         case (code >= 400):

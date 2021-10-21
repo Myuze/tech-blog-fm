@@ -4,7 +4,6 @@ const { Blog, User } = require('../../models');
 const { apiAuth } = require('../../utils/auth');
 
 router.get('/', apiAuth, async (req, res) => {
-	console.log(req.session)
 	try {
 		const dbBlogData = await Blog.findAll({
 			include: {

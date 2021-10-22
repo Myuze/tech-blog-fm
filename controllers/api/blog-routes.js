@@ -27,11 +27,13 @@ router.get('/', apiAuth, async (req, res) => {
 // Create Blog Posts
 router.post('/post', apiAuth, async (req, res) => {
 	try {
+		const { user_id } = req.session;
+
 		const newPost = await Blog.create({
 			title: req.body.title,
 			content: req.body.content,
 			blog_id: req.body.blog_id,
-			author_id: req.session.user_id
+			author_id: user_id
 		});
 		
 		res.status(200).json(newPost);

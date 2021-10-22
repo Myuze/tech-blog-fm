@@ -37,9 +37,9 @@ const apiAuth = async (req, res, next) => {
     req.session.save(() => {
       req.session.loggedIn = true;
       req.session.user_id = dbUserData.id;
+      next();
     });
     
-    next();
   } else {
     withAuth(req, res, next);
   }

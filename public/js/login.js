@@ -35,6 +35,7 @@ loginModal && loginModal.addEventListener('click', async (event) => {
   } else {
     let modalResult = document.getElementById('modalResult');
     modalResult.value = response.status;
+    return;
   }
 });
 

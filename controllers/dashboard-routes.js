@@ -15,7 +15,7 @@ router.get('/', withAuth, async (req, res) => {
 
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
-    res.status(200).render('dashboard', { blogs, loggedIn });
+    res.status(200).render('dashboard', { blogs, loggedIn, username });
   } catch (err) {
     console.log(err)
     res.status(500).render('error', { code: 500 });

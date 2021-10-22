@@ -30,7 +30,8 @@ router.post('/post', apiAuth, async (req, res) => {
 		const newPost = await Blog.create({
 			title: req.body.title,
 			content: req.body.content,
-			author_id: req.body.author_id
+			blog_id: req.body.blog_id,
+			author_id: req.session.user_id
 		});
 		
 		res.status(200).json(newPost);
@@ -134,11 +135,12 @@ router.get('/comments', apiAuth, async (req, res) => {
 
 // Post Comments to Blog Post
 router.post('/comment', apiAuth, async (req, res) => {
+	const { user_id } = req.session;
   try {
 		const commentData = await Comment.create({
 			content: req.body.content,
 			blog_id: req.body.blog_id,
-			author_id: req.body.author_id,
+			author_id: user_id
 		});
 
 		res.status(200).json(commentData);

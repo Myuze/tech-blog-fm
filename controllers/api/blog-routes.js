@@ -32,7 +32,6 @@ router.post('/post', apiAuth, async (req, res) => {
 		const newPost = await Blog.create({
 			title: req.body.title,
 			content: req.body.content,
-			blog_id: req.body.blog_id,
 			author_id: user_id
 		});
 		

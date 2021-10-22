@@ -22,7 +22,7 @@ router.get('/', withAuth, async (req, res) => {
   }
 });
 
-router.post('/post', async (req, res) => {
+router.post('/post', withAuth, async (req, res) => {
   try {
     const { loggedIn, username } = req.session;
     const postData = await Blog.create({

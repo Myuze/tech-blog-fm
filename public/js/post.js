@@ -33,7 +33,8 @@ const postSubmit = document.getElementById('postSubmit');
     });
 
     if (response.ok) {
-      document.location.replace('/dashboard');
+      console.log(response)
+      document.location.replace('/');
     } else {
       let formResult = document.getElementById('formResult');
       formResult.value = response.status;

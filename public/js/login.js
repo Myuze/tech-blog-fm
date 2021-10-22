@@ -29,6 +29,8 @@ loginModal && loginModal.addEventListener('click', async (event) => {
       password
     })
   });
+
+  console.log(response)
   
   if (response.ok) {
     document.location.replace('/');

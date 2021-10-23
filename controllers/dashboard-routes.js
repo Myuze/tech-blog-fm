@@ -4,7 +4,7 @@ const { withAuth } = require('../utils/auth');
 
 router.get('/', withAuth, async (req, res) => {
   try {
-    const { loggedIn, username } = req.session;
+    const { loggedIn, user_id, username } = req.session;
     const blogData = await Blog.findAll({ 
       include: { 
         model: User,
@@ -13,7 +13,9 @@ router.get('/', withAuth, async (req, res) => {
       }
     });
 
-    const blogs = blogData.map((blog) => blog.get({ plain: true }));
+    const blogs = blogData
+      .filter(blog => blog.author_id === user_id)
+      .map((blog) => blog.get({ plain: true }));
 
     res.status(200).render('dashboard', { blogs, loggedIn, username });
   } catch (err) {

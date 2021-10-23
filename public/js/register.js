@@ -40,5 +40,6 @@ registerSubmit && registerSubmit.addEventListener('click', async (event) => {
     document.location.replace('/');
   } else {
     confirmResult.value = response.status;
+    return;
   }
 });

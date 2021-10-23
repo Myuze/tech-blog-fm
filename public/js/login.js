@@ -2,12 +2,12 @@
 // Login Elements
 const ddLoginBtn = document.getElementById('ddLoginBtn');
 const ddLogoutBtn = document.getElementById('ddLogoutBtn');
+const signUpBtn = document.getElementById('signUpBtn');
 const homeLoginBtn = document.getElementById('homeLoginBtn');
 const loginEmail = document.getElementById('loginEmail');
 const inputPass = document.getElementById('inputPass');
 
 // Modal Elements
-// const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
 const loginModal = document.getElementById('loginModal');
 const loginSubmit = document.getElementById('loginSubmit');
 
@@ -55,4 +55,11 @@ ddLogoutBtn && ddLogoutBtn.addEventListener('click', async (event) => {
   if (response.ok) {
     document.location.replace('/');
   }
+});
+
+// Signup Button Handler
+signUpBtn && signUpBtn.addEventListener('click', async (event) => {
+  event.preventDefault();
+
+  document.location.replace('/register');
 });

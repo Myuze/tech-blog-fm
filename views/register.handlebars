@@ -1,0 +1,14 @@
+<section>
+    {{#unless loggedIn}}
+    {{> register-form}}
+    <div class="card text-center"></div>
+    <div class="d-grid gap-2 col-6 mt-5 mx-auto">
+        <button id="registerSubmit" class="btn btn-primary" type="submit">Register</button>
+    </div>
+    <p id="confirmResult"></p>
+    {{else}}
+        {{> register-confirm}}
+    {{/unless}}
+</section>
+{{> login-modal}}
+<script src="/js/register.js"></script>

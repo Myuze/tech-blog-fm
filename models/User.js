@@ -35,7 +35,8 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      isEmail: true
+      isEmail: true,
+      notEmpty: true
     }
   },
   {

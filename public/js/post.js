@@ -33,6 +33,7 @@ const postSubmit = document.getElementById('postSubmit');
     });
 
     if (response.ok) {
+      console.log(response)
       document.location.replace('/');
     } else {
       let formResult = document.getElementById('formResult');

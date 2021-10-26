@@ -3,6 +3,11 @@
     <h5 class="card-header bg-secondary">{{ title }}</h5>
     <p class="card-text p-3">{{ content }}</p>
     <div class="d-flex flex-row justify-content-between card-footer">
+      {{#if loggedIn}}
+      <div class="button-group">
+        <button id="postComment" class="btn btn-primary" type="button">Comment</button>
+        <button id="postDelete" class="btn btn-primary" type="button">Delete</button>
+      </div>
       <p class="card-text">Author: {{ Blogger.username }}</p>
       <p class="card-text">Created: {{ format_created updatedAt }}</p>
     </div>

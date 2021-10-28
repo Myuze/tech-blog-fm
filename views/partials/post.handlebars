@@ -8,8 +8,11 @@
         <button id="postComment" class="btn btn-primary" type="button">Comment</button>
         <button id="postDelete" class="btn btn-primary" type="button">Delete</button>
       </div>
-      <p class="card-text">Author: {{ Blogger.username }}</p>
-      <p class="card-text">Created: {{ format_created updatedAt }}</p>
+      {{/if}}
+      <div class="d-flex justify-content-between">
+        <p class="card-text">Author: {{ Blogger.username }}</p>
+        <p class="card-text">Created: {{ format_created updatedAt }}</p>
+      </div>
     </div>
   </div>
 </div>

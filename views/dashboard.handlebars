@@ -7,9 +7,10 @@
           <h5 class="card-title" id="postPageLabel">Create a New Post</h5>
         </div>
         <div class="card-body">
-          {{> post-form username}}
+          {{> post-form Blogger}}
         </div>
         <div class="card-footer">
+          <button id="postCancel" type="button" class="btn btn-secondary" data-bs-dismiss="card">Cancel</button>
           <button id="postSubmit" type="submit" class="btn btn-primary">Post</button>
         </div>
       </div>
@@ -19,7 +20,8 @@
 <section>
   <div class="d-flex flex-column-reverse mt-3 post-container">
     {{#each blogs as |blog|}}
-    {{> post }}
+    {{log loggedIn}}
+    {{> post loggedIn=../loggedIn}}
     {{/each}}
   </div>
 </section>

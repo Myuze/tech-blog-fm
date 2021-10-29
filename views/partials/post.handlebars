@@ -2,16 +2,16 @@
   <div class="card-body p-0">
     <h5 class="card-header bg-secondary">{{ title }}</h5>
     <p class="card-text p-3">{{ content }}</p>
-    <div class="d-flex flex-row justify-content-between card-footer">
+    <div class="d-sm-flex flex-row justify-content-between card-footer">
       {{#if loggedIn}}
       <div class="button-group">
         <button id="postComment" class="btn btn-primary" type="button">Comment</button>
         <button id="postDelete" class="btn btn-primary" type="button">Delete</button>
       </div>
       {{/if}}
-      <div class="d-flex justify-content-between">
-        <p class="card-text">Author: {{ Blogger.username }}</p>
-        <p class="card-text">Created: {{ format_created updatedAt }}</p>
+      <div class="d-sm-flex justify-content-between">
+        <p class="card-text px-2">Author: {{ Blogger.username }}</p>
+        <p class="card-text px-2">Created: {{ format_created updatedAt }}</p>
       </div>
     </div>
   </div>

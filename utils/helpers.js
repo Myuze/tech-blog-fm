@@ -13,7 +13,7 @@ module.exports = {
       }
     },
     if_user: (blog, user_id) => {
-      return (blog === user_id) ? `<button id="postDelete" class="btn btn-primary" type="button">Delete</button>` : false
+      return (blog === user_id) ? `<button id="postDelete" class="btn btn-primary" type="button">Delete</button>` : ``
     }
   };
   

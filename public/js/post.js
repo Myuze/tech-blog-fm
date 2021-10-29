@@ -9,6 +9,11 @@ const homeNewPostBtn = document.getElementById('homeNewPostBtn');
 const modalPostSubmit = document.getElementById('modalPostSubmit');
 const postSubmit = document.getElementById('postSubmit');
 
+// Post Elements
+const postContainer = document.getElementsByClassName('post-container');
+const postCommentBtn = document.getElementById('postcomment');
+const postDeleteBtn = document.getElementById('postDelete');
+
 // Post Submit Handler
 (postSubmit && postSubmit || modalPostSubmit && modalPostSubmit || homeNewPostBtn && homeNewPostBtn)
   .addEventListener('click', async (event) => {
@@ -39,4 +44,22 @@ const postSubmit = document.getElementById('postSubmit');
       let formResult = document.getElementById('formResult');
       formResult.value = response.status;
     }
+});
+
+postContainer && postContainer.addEventListener('click', async (event) => {
+  event.preventDefault();
+  if (event.target === null) return;
+
+
+});
+postCommentBtn && postCommentBtn.addEventListener('click', async (event) => {
+  event.preventDefault();
+  if (event.target === null) return;
+
+
+});
+postDeleteBtn && postDeleteBtn.addEventListener('click', async (event) => {
+  event.preventDefault();
+  if (event.target === null) return;
+
 });

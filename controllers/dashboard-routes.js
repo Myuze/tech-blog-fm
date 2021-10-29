@@ -17,7 +17,7 @@ router.get('/', withAuth, async (req, res) => {
       .filter(blog => blog.author_id === user_id)
       .map((blog) => blog.get({ plain: true }));
 
-    res.status(200).render('dashboard', { blogs, loggedIn, username });
+    res.status(200).render('dashboard', { blogs, loggedIn, username, user_id });
   } catch (err) {
     console.log(err)
     res.status(500).render('error', { code: 500 });

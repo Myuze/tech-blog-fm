@@ -11,6 +11,9 @@ module.exports = {
           console.log('Unknown Error Code!');
           break;
       }
+    },
+    if_user: (blog, user_id) => {
+      return (blog === user_id) ? `<button id="postDelete" class="btn btn-primary" type="button">Delete</button>` : false
     }
   };
   

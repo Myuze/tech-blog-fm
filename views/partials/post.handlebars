@@ -1,7 +1,17 @@
 <div class="card my-3 mx-auto" style="width: 90%;">
   <div class="card-body p-0">
-    <h5 class="card-header bg-secondary">{{ title }}</h5>
-    <p class="card-text p-3">{{ content }}</p>
+    <section>
+      <h5 class="card-header bg-secondary">{{ title }}</h5>
+      <p class="card-text p-3">{{ content }}</p>
+    </section>
+    <section>
+      <div class="d-flex flex-column-reverse mt-3 comment-container">
+        Comments:
+        {{#each comments as |comment|}}
+        {{> comment}}
+        {{/each}}
+      </div>
+    </section>
     <div class="d-sm-flex flex-row justify-content-between card-footer">
       {{#if loggedIn}}
       <div class="button-group">

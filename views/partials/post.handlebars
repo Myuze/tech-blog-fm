@@ -5,10 +5,10 @@
       <p class="card-text p-3">{{ content }}</p>
     </section>
     <section>
+      Comments:
       <div class="d-flex flex-column-reverse mt-3 comment-container">
-        Comments:
         {{#each comments as |comment|}}
-        {{> comment}}
+        {{> comment username=Commenter.username content=content}}
         {{/each}}
       </div>
     </section>

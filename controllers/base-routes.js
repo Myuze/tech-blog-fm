@@ -24,9 +24,6 @@ router.get('/', async (req, res) => {
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
     const comments = commentData.map((comment) => comment.get({ plain: true }));
 
-    console.log(blogs)
-    console.log(comments)
-
     res.status(200).render('welcome', { blogs, comments, loggedIn, username, user_id });
   } catch (err) {
     console.log(err)

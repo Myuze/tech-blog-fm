@@ -1,6 +1,7 @@
 module.exports = {
     if_first: (index) => (index === 0) ? true : false,
-    if_commenter: (id, author_id) => (id === author_id) ? true : false,
+    if_user: (author_id, user_id) => (author_id === user_id) ? true : false,
+    if_commenter: (blog_id, comment_blog_id) => (blog_id === comment_blog_id) ? true : false,
     format_created: (date) => date.toLocaleDateString(),
     parse_err_code: (code) => {
       switch (code) {
@@ -12,10 +13,6 @@ module.exports = {
           console.log('Unknown Error Code!');
           break;
       }
-    },
-    if_user: (blog, user_id) => {
-      console.log(blog, ' =? ', user_id)
-      return (blog === user_id) ? true : false
     }
   };
   

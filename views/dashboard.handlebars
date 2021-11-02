@@ -20,7 +20,7 @@
 <section>
   <div class="d-flex flex-column-reverse mt-3 post-container">
     {{#each blogs as |blog|}}
-    {{> post loggedIn=../loggedIn user_id=../user_id}}
+    {{> post loggedIn=../loggedIn user_id=../user_id comments=../comments}}
     {{/each}}
   </div>
 </section>

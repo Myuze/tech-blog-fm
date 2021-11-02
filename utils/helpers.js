@@ -1,5 +1,6 @@
 module.exports = {
     if_first: (index) => (index === 0) ? true : false,
+    if_commenter: (id, author_id) => (id === author_id) ? true : false,
     format_created: (date) => date.toLocaleDateString(),
     parse_err_code: (code) => {
       switch (code) {
@@ -13,7 +14,8 @@ module.exports = {
       }
     },
     if_user: (blog, user_id) => {
-      return (blog === user_id) ? `<button id="postDelete" class="btn btn-primary" type="button">Delete</button>` : ``
+      console.log(blog, ' =? ', user_id)
+      return (blog === user_id) ? true : false
     }
   };
   

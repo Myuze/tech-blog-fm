@@ -8,9 +8,9 @@
       {{#if loggedIn}}
       <div class="button-group">
         <button id="postComment" class="btn btn-primary" type="button">Comment</button>
-        {{#if_user author_id user_id}}
+        {{#if (if_user author_id user_id)}}
         <button id="postDelete" class="btn btn-primary" type="button">Delete</button>
-        {{/if_user}}
+        {{/if}}
       </div>
       {{/if}}
       <div class="d-sm-flex justify-content-between">
@@ -23,7 +23,9 @@
       <h5 class="p-2">Comments:</h5>
       <div class="d-flex flex-column-reverse mt-3 comment-container">
         {{#each comments as |comment|}}
+        {{#if (if_commenter id comment.blog_id)}}
         {{> comment username=Commenter.username content=content}}
+        {{/if}}
         {{/each}}
       </div>
     </section>

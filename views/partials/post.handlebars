@@ -4,15 +4,7 @@
       <h5 class="card-header bg-secondary">{{ title }}</h5>
       <p class="card-text p-3">{{ content }}</p>
     </section>
-    <section>
-      Comments:
-      <div class="d-flex flex-column-reverse mt-3 comment-container">
-        {{#each comments as |comment|}}
-        {{> comment username=Commenter.username content=content}}
-        {{/each}}
-      </div>
-    </section>
-    <div class="d-sm-flex flex-row justify-content-between card-footer">
+    <div class="d-sm-flex flex-row justify-content-between card-footer p-2">
       {{#if loggedIn}}
       <div class="button-group">
         <button id="postComment" class="btn btn-primary" type="button">Comment</button>
@@ -26,5 +18,14 @@
         <p class="card-text px-2">Created: {{ format_created updatedAt }}</p>
       </div>
     </div>
+    <hr>
+    <section>
+      <h5 class="p-2">Comments:</h5>
+      <div class="d-flex flex-column-reverse mt-3 comment-container">
+        {{#each comments as |comment|}}
+        {{> comment username=Commenter.username content=content}}
+        {{/each}}
+      </div>
+    </section>
   </div>
 </div>

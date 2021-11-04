@@ -5,7 +5,19 @@
     <section>
       <h5 class="card-header bg-info">{{ username }}</h5>
       <p class="card-text p-3">{{ content }}</p>
-      <p class="card-text px-2 card-footer">Created: {{ format_created updatedAt }}</p>
+      <p class="card-text px-2 card-footer">
+        <div>
+          Created: {{ format_created updatedAt }}
+        </div>
+        {{#if loggedIn}}
+          {{#if (if_user author_id user_id)}}
+        <div class="button-group">
+          <button id="commentUpdate" class="btn btn-primary" data-blog-id="{{ id }}" data-bs-toggle="modal" data-bs-target="#updateModal" type="button">Update</button>
+          <button id="commentDelete" class="btn btn-primary" data-blog-id="{{ id }}" type="button">Delete</button>
+        </div>
+          {{/if}}
+        {{/if}}
+      </p>
     </section>
   </div>
 </div>

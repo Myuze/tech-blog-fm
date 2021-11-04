@@ -31,16 +31,4 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/post', withAuth, async (req, res) => {
-  try {
-    const { loggedIn, username } = req.session;
-    const postData = await Blog.create({
-
-    })
-  } catch (err) {
-    console.log(err);
-    res.status(500).render('error', { code: 500 });
-  }
-});
-
 module.exports = router;

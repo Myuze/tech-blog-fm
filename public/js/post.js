@@ -50,7 +50,7 @@ const postDeleteBtn = document.getElementById('postDelete');
 //   event.preventDefault();
 //   if (event.target === null) return;
   
-postDeleteBtn && postDeleteBtn.addEventListener('click', async (event) => {
+postContainer[0] && postContainer[0].addEventListener('click', async (event) => {
   event.preventDefault();
   if (event.target === null) return;
 

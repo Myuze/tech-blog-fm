@@ -4,3 +4,19 @@ const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-t
 const dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
   return new bootstrap.Dropdown(dropdownToggleEl);
 });
+
+// Dropdown Logout Handler
+ddLogoutBtn && ddLogoutBtn.addEventListener('click', async (event) => {
+  event.preventDefault();
+
+  const response = await fetch('/api/users/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    document.location.reload();
+  }
+});

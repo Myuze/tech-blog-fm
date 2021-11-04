@@ -45,7 +45,7 @@ const commentPostSubmit = document.getElementById('commentPostSubmit');
       document.location.reload();
     } else {
       let formResult = document.getElementById('formResult');
-      formResult.value = response.status;
+      formResult.innerHTML = response.status;
     }
 });
 

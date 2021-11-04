@@ -29,31 +29,13 @@ loginModal && loginModal.addEventListener('click', async (event) => {
       password
     })
   });
-
-  console.log(response)
   
   if (response.ok) {
     document.location.reload();
   } else {
     let modalResult = document.getElementById('modalResult');
-    modalResult.value = response.status;
+    modalResult.innerHTML = response.status;
     return;
-  }
-});
-
-// Dropdown Logout Handler
-ddLogoutBtn && ddLogoutBtn.addEventListener('click', async (event) => {
-  event.preventDefault();
-
-  const response = await fetch('/api/users/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-
-  if (response.ok) {
-    document.location.reload();
   }
 });
 

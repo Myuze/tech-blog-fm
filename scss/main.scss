@@ -29,3 +29,6 @@ $secondary: rgba(212, 124, 235, 0.308);
 @import "../node_modules/bootstrap/scss/utilities/api";
 
 // 6. Add additional custom code here
+.error {
+  color: red;
+}

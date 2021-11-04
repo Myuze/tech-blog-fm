@@ -34,7 +34,14 @@ loginModal && loginModal.addEventListener('click', async (event) => {
     document.location.reload();
   } else {
     let modalResult = document.getElementById('modalResult');
-    modalResult.innerHTML = response.status;
+    let resError = '';
+    modalResult.classList.add('error');
+    if ( response.status === 400 ) {
+      resError = 'User does not exist.';
+    } else {
+      resError = 'Incorrect password, please try again.'
+    }
+    modalResult.innerHTML = resError;
     return;
   }
 });

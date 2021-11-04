@@ -9589,5 +9589,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.error {
+  color: red;
+}
 
 /*# sourceMappingURL=main.css.map */

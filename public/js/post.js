@@ -1,6 +1,7 @@
+// import bootstrap from "../../node_modules/bootstrap/";
+
 // Blog Handlers
 // Modal Post Form Elements
-const formUserPost = document.getElementById('formUserPost');
 const formPostTitle = document.getElementById('formPostTitle');
 const formInputContent = document.getElementById('formInputContent');
 
@@ -11,8 +12,12 @@ const postSubmit = document.getElementById('postSubmit');
 
 // Post Elements
 const postContainer = document.getElementsByClassName('post-container');
-const postCommentBtn = document.getElementById('postcomment');
-const postDeleteBtn = document.getElementById('postDelete');
+
+// Comment Elements
+const commentModal = document.getElementById('commentModal');
+const commentPostBtn = document.getElementById('postComment');
+const commentInputContent = document.getElementById('commentInputContent');
+const commentPostSubmit = document.getElementById('commentPostSubmit');
 
 // Post Submit Handler
 (postSubmit && postSubmit || modalPostSubmit && modalPostSubmit || homeNewPostBtn && homeNewPostBtn)
@@ -21,7 +26,6 @@ const postDeleteBtn = document.getElementById('postDelete');
     if (event.target.getAttribute('type') != 'submit') return;
 
     formPostTitle.focus();
-    let user = formUserPost.value;
     let title = formPostTitle.value;
     let content = formInputContent.value;
 
@@ -31,7 +35,6 @@ const postDeleteBtn = document.getElementById('postDelete');
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user,
         title,
         content
       })
@@ -46,20 +49,60 @@ const postDeleteBtn = document.getElementById('postDelete');
     }
 });
 
-// postCommentBtn && postCommentBtn.addEventListener('click', async (event) => {
-//   event.preventDefault();
-//   if (event.target === null) return;
+// Post Comment Button Handler
+commentModal.addEventListener('shown.bs.modal', (event) => {
+  // Set Modal Comment button to submit to the active blog
+  const blog_id = commentPostBtn.getAttribute('data-blog-id');
+  commentModal.setAttribute('data-blog-id', blog_id);
+
+  // Create Comment Modal Listener
+  commentPostSubmit && commentPostSubmit.addEventListener('click', async (event) => {
+    event.preventDefault();
+    if (event.target === null) return;
   
+    if (event.target.id === 'commentPostSubmit') {
+      let content = commentInputContent.value;
+      console.log('blog_id, content: ', blog_id, content);
+      await commentOnPost(blog_id, content);
+    }
+  });
+});
+
+// Create Blog Post Listener
 postContainer[0] && postContainer[0].addEventListener('click', async (event) => {
   event.preventDefault();
   if (event.target === null) return;
+  
+  let blog_id = event.target.getAttribute('data-blog-id');
 
   if (event.target.id === 'postDelete') {
-    let blog_id = event.target.getAttribute('data-blog-id');
-    console.log('blog-id', blog_id)
     await deletePost(blog_id);
   };
 });
+
+// Comment on Blog Post
+async function commentOnPost(blog_id, content) {
+  if (blog_id == null || content == '' || content == null) return;
+
+  const response = await fetch('/api/blogs/comment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      content,
+      blog_id
+    })
+  });
+
+  if (response.ok) {
+    console.log(response)
+    document.location.reload();
+  } else {
+    let formResult = document.getElementById('formResult');
+    formResult.value = response.status;
+  }
+};
 
 // Delete Blog Post by Id
 async function deletePost(blog_id) {
@@ -76,7 +119,7 @@ async function deletePost(blog_id) {
     console.log(response)
     document.location.reload();
   } 
-}
+};
 
 // Select button to focus based on target
 function focusButton(target) {
@@ -91,4 +134,4 @@ function focusButton(target) {
     default:
       break;
   }
-}
+};

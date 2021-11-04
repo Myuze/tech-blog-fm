@@ -33,7 +33,7 @@ loginModal && loginModal.addEventListener('click', async (event) => {
   console.log(response)
   
   if (response.ok) {
-    document.location.replace('/');
+    document.location.reload();
   } else {
     let modalResult = document.getElementById('modalResult');
     modalResult.value = response.status;
@@ -53,7 +53,7 @@ ddLogoutBtn && ddLogoutBtn.addEventListener('click', async (event) => {
   });
 
   if (response.ok) {
-    document.location.replace('/');
+    document.location.reload();
   }
 });
 

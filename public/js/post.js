@@ -39,27 +39,56 @@ const postDeleteBtn = document.getElementById('postDelete');
 
     if (response.ok) {
       console.log(response)
-      document.location.replace('/');
+      document.location.reload();
     } else {
       let formResult = document.getElementById('formResult');
       formResult.value = response.status;
     }
 });
 
-postContainer && postContainer.addEventListener('click', async (event) => {
-  event.preventDefault();
-  if (event.target === null) return;
-
-
-});
-postCommentBtn && postCommentBtn.addEventListener('click', async (event) => {
-  event.preventDefault();
-  if (event.target === null) return;
-
-
-});
+// postCommentBtn && postCommentBtn.addEventListener('click', async (event) => {
+//   event.preventDefault();
+//   if (event.target === null) return;
+  
 postDeleteBtn && postDeleteBtn.addEventListener('click', async (event) => {
   event.preventDefault();
   if (event.target === null) return;
 
+  if (event.target.id === 'postDelete') {
+    let blog_id = event.target.getAttribute('data-blog-id');
+    console.log('blog-id', blog_id)
+    await deletePost(blog_id);
+  };
 });
+
+// Delete Blog Post by Id
+async function deletePost(blog_id) {
+  if (blog_id == null) return;
+
+  const response = await fetch(`/api/blogs/${blog_id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  if (response.ok) {
+    console.log(response)
+    document.location.reload();
+  } 
+}
+
+// Select button to focus based on target
+function focusButton(target) {
+  if (target.type != 'button') return;
+
+  switch (target) {
+    case target.toLower().contains('modal'):
+      
+      
+      break;
+  
+    default:
+      break;
+  }
+}

@@ -52,14 +52,15 @@ const commentPostSubmit = document.getElementById('commentPostSubmit');
 // Post Comment Button Handler
 commentModal.addEventListener('shown.bs.modal', (event) => {
   // Set Modal Comment button to submit to the active blog
-  const blog_id = commentPostBtn.getAttribute('data-blog-id');
-  commentModal.setAttribute('data-blog-id', blog_id);
-
+  const blog_id = event.relatedTarget.getAttribute('data-blog-id');
+  commentPostBtn.setAttribute('data-blog-id', blog_id);
+  commentPostSubmit.setAttribute('data-blog-id', blog_id);
+  
   // Create Comment Modal Listener
   commentPostSubmit && commentPostSubmit.addEventListener('click', async (event) => {
     event.preventDefault();
     if (event.target === null) return;
-  
+    
     if (event.target.id === 'commentPostSubmit') {
       let content = commentInputContent.value;
       console.log('blog_id, content: ', blog_id, content);

@@ -16,8 +16,12 @@ const postContainer = document.getElementsByClassName('post-container');
 // Comment Elements
 const commentModal = document.getElementById('commentModal');
 const commentPostBtn = document.getElementById('postComment');
-const commentInputContent = document.getElementById('commentInputContent');
 const commentPostSubmit = document.getElementById('commentPostSubmit');
+
+// Update Comment Elements
+const updateModalComment = document.getElementById('updateModalComment');
+const updateModalCommentSubmit = document.getElementById('updateModalComment');
+const commentformInputContent = document.getElementById('commentformInputContent');
 
 // Post Submit Handler
 (postSubmit && postSubmit || modalPostSubmit && modalPostSubmit || homeNewPostBtn && homeNewPostBtn)
@@ -62,12 +66,32 @@ commentModal.addEventListener('shown.bs.modal', (event) => {
     if (event.target === null) return;
     
     if (event.target.id === 'commentPostSubmit') {
-      let content = commentInputContent.value;
+      let content = commentformInputContent.value;
       console.log('blog_id, content: ', blog_id, content);
       await commentOnPost(blog_id, content);
     }
   });
 });
+
+// // Update Comment Button Handler
+// updateModalComment.addEventListener('shown.bs.modal', (event) => {
+//   // Set Modal Comment button to submit to the active blog
+//   const blog_id = event.relatedTarget.getAttribute('data-blog-id');
+//   commentPostBtn.setAttribute('data-blog-id', blog_id);
+//   commentPostSubmit.setAttribute('data-blog-id', blog_id);
+  
+//   // Create Comment Modal Listener
+//   commentPostSubmit && commentPostSubmit.addEventListener('click', async (event) => {
+//     event.preventDefault();
+//     if (event.target === null) return;
+    
+//     if (event.target.id === 'commentPostSubmit') {
+//       let content = commentformInputContent.value;
+//       console.log('blog_id, content: ', blog_id, content);
+//       await commentOnPost(blog_id, content);
+//     }
+//   });
+// });
 
 // Create Blog Post Listener
 postContainer[0] && postContainer[0].addEventListener('click', async (event) => {
@@ -120,19 +144,4 @@ async function deletePost(blog_id) {
     console.log(response)
     document.location.reload();
   } 
-};
-
-// Select button to focus based on target
-function focusButton(target) {
-  if (target.type != 'button') return;
-
-  switch (target) {
-    case target.toLower().contains('modal'):
-      
-      
-      break;
-  
-    default:
-      break;
-  }
 };

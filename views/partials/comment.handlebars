@@ -5,10 +5,8 @@
     <section>
       <h5 class="card-header bg-info">{{ username }}</h5>
       <p class="card-text p-3">{{ content }}</p>
-      <p class="card-text px-2 card-footer">
-        <div>
-          Created: {{ format_created updatedAt }}
-        </div>
+      <p class="card-text mb-0 p-0 card-footer">
+        <div class="d-sm-flex p-2 justify-content-between">
         {{#if loggedIn}}
           {{#if (if_user author_id user_id)}}
         <div class="button-group">
@@ -17,6 +15,8 @@
         </div>
           {{/if}}
         {{/if}}
+          Comment Date: {{ format_created updatedAt }}
+        </div>
       </p>
     </section>
   </div>

@@ -26,7 +26,7 @@ Blog.hasMany(Comment, {
   foreignKey: {
     model: 'blog',
     key: 'id',
-    onDelete: 'CASCADE'
+    onDelete: 'SET NULL'
   }
 });
 
@@ -34,7 +34,7 @@ Comment.belongsTo(Blog, {
   foreignKey: {
     model: 'comment',
     key: 'id',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   }
 });
 

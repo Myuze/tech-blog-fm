@@ -25,14 +25,16 @@ Comment.belongsTo(User, {
 Blog.hasMany(Comment, {
   foreignKey: {
     model: 'blog',
-    key: 'id'
+    key: 'id',
+    onDelete: 'SET NULL'
   }
 });
 
 Comment.belongsTo(Blog, {
   foreignKey: {
     model: 'comment',
-    key: 'id'
+    key: 'id',
+    onDelete: 'CASCADE'
   }
 });
 

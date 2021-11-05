@@ -17,30 +17,11 @@
       <a href="/register"><button class="btn btn-primary">Register</button></a>
       <button id="ddLoginBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" type="button">Login</button>
       {{else}}
-      <button id="ddLogoutBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" type="button">Logout</button>
+      <button id="ddLogoutBtn" class="btn btn-primary" type="button">Logout</button>
       {{/unless}}
     </div>
   </div>
 </nav>
-{{!-- <nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Tech Blog FM</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li><a href="/"><button aria-current="page" type="button">Home</button></a></li>
-        <li><a href="/dashboard"><button type="button">Dashboard</button></a></li>
-        {{#unless loggedIn}}
-        <li><button id="ddLoginBtn" data-bs-toggle="modal" data-bs-target="#loginModal" type="button">Login</li>
-        {{else}}
-        <li><button id="ddLogoutBtn" data-bs-toggle="modal" data-bs-target="#loginModal" type="button">Logout</li>
-        {{/unless}}
-      </ul>
-    </div>
-  </div>
-</nav> --}}
 <body>
     {{{ body }}}
 </body>

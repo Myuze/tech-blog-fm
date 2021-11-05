@@ -29,31 +29,20 @@ loginModal && loginModal.addEventListener('click', async (event) => {
       password
     })
   });
-
-  console.log(response)
   
   if (response.ok) {
-    document.location.replace('/');
+    document.location.reload();
   } else {
     let modalResult = document.getElementById('modalResult');
-    modalResult.value = response.status;
-    return;
-  }
-});
-
-// Dropdown Logout Handler
-ddLogoutBtn && ddLogoutBtn.addEventListener('click', async (event) => {
-  event.preventDefault();
-
-  const response = await fetch('/api/users/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
+    let resError = '';
+    modalResult.classList.add('error');
+    if ( response.status === 400 ) {
+      resError = 'User does not exist.';
+    } else {
+      resError = 'Incorrect password, please try again.'
     }
-  });
-
-  if (response.ok) {
-    document.location.replace('/');
+    modalResult.innerHTML = resError;
+    return;
   }
 });
 

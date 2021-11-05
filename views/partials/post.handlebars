@@ -26,7 +26,7 @@
       <div class="d-flex flex-column-reverse mt-3 comment-container">
         {{#each comments as |comment|}}
         {{#if (if_commenter ../id comment.blog_id )}}
-        {{> comment loggedIn=../loggedIn username=Commenter.username content=content id=id author_id=../author_id user_id=../user_id}}
+        {{> comment loggedIn=../loggedIn username=Commenter.username content=content id=comment.id author_id=../author_id user_id=../user_id}}
         {{/if}}
         {{/each}}
       </div>

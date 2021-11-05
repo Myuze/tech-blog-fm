@@ -98,11 +98,16 @@ postContainer[0] && postContainer[0].addEventListener('click', async (event) => 
   event.preventDefault();
   if (event.target === null) return;
   
-  let blog_id = event.target.getAttribute('data-blog-id');
-
   if (event.target.id === 'postDelete') {
+    let blog_id = event.target.getAttribute('data-blog-id');
     await deletePost(blog_id);
   };
+
+  if (event.target.id === 'commentDelete') {
+    let comment_id = event.target.getAttribute('data-comment-id');
+    console.log('COMMENT ID!!!!: ', comment_id)
+    await deleteComment(comment_id);
+  }
 });
 
 // Comment on Blog Post
@@ -134,6 +139,23 @@ async function deletePost(blog_id) {
   if (blog_id == null) return;
 
   const response = await fetch(`/api/blogs/${blog_id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  if (response.ok) {
+    console.log(response)
+    document.location.reload();
+  } 
+};
+
+// Delete Comment by Id
+async function deleteComment(comment_id) {
+  if (comment_id == null) return;
+
+  const response = await fetch(`/api/blogs/comments/${comment_id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

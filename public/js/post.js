@@ -45,7 +45,6 @@ const commentformInputContent = document.getElementById('commentformInputContent
     });
 
     if (response.ok) {
-      console.log(response)
       document.location.reload();
     } else {
       let formResult = document.getElementById('formResult');
@@ -87,7 +86,6 @@ commentModal.addEventListener('shown.bs.modal', (event) => {
     
 //     if (event.target.id === 'commentPostSubmit') {
 //       let content = commentformInputContent.value;
-//       console.log('blog_id, content: ', blog_id, content);
 //       await commentOnPost(blog_id, content);
 //     }
 //   });
@@ -105,7 +103,6 @@ postContainer[0] && postContainer[0].addEventListener('click', async (event) => 
 
   if (event.target.id === 'commentDelete') {
     let comment_id = event.target.getAttribute('data-comment-id');
-    console.log('COMMENT ID!!!!: ', comment_id)
     await deleteComment(comment_id);
   }
 });
@@ -126,7 +123,6 @@ async function commentOnPost(blog_id, content) {
   });
 
   if (response.ok) {
-    console.log(response)
     document.location.reload();
   } else {
     let formResult = document.getElementById('formResult');
@@ -146,7 +142,6 @@ async function deletePost(blog_id) {
   });
 
   if (response.ok) {
-    console.log(response)
     document.location.reload();
   } 
 };
@@ -163,7 +158,6 @@ async function deleteComment(comment_id) {
   });
 
   if (response.ok) {
-    console.log(response)
     document.location.reload();
   } 
 };

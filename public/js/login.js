@@ -1,7 +1,6 @@
 // Login Modal
 // Login Elements
 const ddLoginBtn = document.getElementById('ddLoginBtn');
-const ddLogoutBtn = document.getElementById('ddLogoutBtn');
 const signUpBtn = document.getElementById('signUpBtn');
 const homeLoginBtn = document.getElementById('homeLoginBtn');
 const loginEmail = document.getElementById('loginEmail');

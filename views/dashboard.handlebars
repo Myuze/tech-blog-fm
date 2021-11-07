@@ -22,13 +22,6 @@
     {{> post loggedIn=../loggedIn user_id=../user_id comments=../comments}}
     {{/each}}
   </div>
-  <div class="d-flex flex-column-reverse mt-3 comment-container">
-    {{#each comments as |comment|}}
-    {{#if (if_comment_owner ../user_id comment.author_id)}}
-    {{> comment loggedIn=../loggedIn username=Commenter.username content=content id=comment.id author_id=comment.author_id user_id=../user_id}}
-    {{/if}}
-    {{/each}}
-  </div>
 </section>
 {{> comment-modal}}
 {{> update-comment-modal}}

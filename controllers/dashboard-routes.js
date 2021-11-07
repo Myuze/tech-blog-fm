@@ -17,14 +17,14 @@ router.get('/', withAuth, async (req, res) => {
     });
 
     // Filter all active user's comments on blogs
-    const userComments = commentData
+    const comments = commentData
       .filter(comment => comment.author_id === user_id)
       .map((comment) => comment.get({ plain: true }));
 
     // Store all blog_id of Blogs commented by user in array for query
     let blogArray = [];
-    for (let i = 0; i < userComments.length; i++) {
-      blogArray.push(userComments[i].blog_id);
+    for (let i = 0; i < comments.length; i++) {
+      blogArray.push(comments[i].blog_id);
     }
 
     // Query all User's blogs and blogs user commented on
@@ -47,12 +47,6 @@ router.get('/', withAuth, async (req, res) => {
     
     const blogs = userBlogData
       .map((comment) => comment.get({ plain: true }));
-
-    // // Add all user commented blogs to list of Blogs
-    // let blogs = userBlogs.concat(userCommentedBlogs)
-
-    console.log('blogs', blogs)
-    let comments = userComments;
 
     res.status(200).render('dashboard', { blogs, comments, loggedIn, username, user_id });
   } catch (err) {

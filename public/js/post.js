@@ -1,7 +1,9 @@
 // Blog Handlers
 // Modal Post Form Elements
 const formPostTitle = document.getElementById('formPostTitle');
+const updateFormPostTitle = document.getElementById('updateFormPostTitle');
 const formInputContent = document.getElementById('formInputContent');
+const updateFormInputContent = document.getElementById('updateFormInputContent');
 
 // Modal Button Elements
 const homeNewPostBtn = document.getElementById('homeNewPostBtn');
@@ -10,6 +12,7 @@ const postSubmit = document.getElementById('postSubmit');
 
 // Post Elements
 const postContainer = document.getElementsByClassName('post-container');
+const dashFormInputContent = document.getElementById('dashFormInputContent');
 
 // Comment Elements
 const commentModal = document.getElementById('commentModal');
@@ -17,10 +20,10 @@ const commentPostBtn = document.getElementById('postComment');
 const commentPostSubmit = document.getElementById('commentPostSubmit');
 
 // Update Comment Elements
-const postUpdate = document.getElementById('postUpdate');
 const updateCommentModal = document.getElementById('updateCommentModal');
 const updateCommentModalSubmit = document.getElementById('updateCommentModal');
 const commentformInputContent = document.getElementById('commentformInputContent');
+const updateCommentFormInputContent = document.getElementById('updateCommentFormInputContent');
 
 // Create Post Submit Listener
 (postSubmit && postSubmit || modalPostSubmit && modalPostSubmit || homeNewPostBtn && homeNewPostBtn)
@@ -103,16 +106,20 @@ function handleModalSubmit (target, param) {
 
   switch (target.id) {
     case 'updatePostModalSubmit':
+      console.log('updateFormInputContent.value, updateFormPostTitle.value: ', updateFormInputContent.value, updateFormPostTitle.value);
+      
       body.blog_id = param;
-      body.title = formPostTitle.value;
-      body.content = formInputContent.value;
-      updatePost(JSON.stringify(body));
+      body.author_id = param;
+      body.title = updateFormPostTitle.value;
+      body.content = updateFormInputContent.value;
+      console.log('body: ', body)
+      updatePost(body);
       break;
     
     case 'updateCommentModalSubmit':
       body.comment_id = param;
       body.content = commentformInputContent.value;
-      updateComment(JSON.stringify(body));
+      updateComment(body);
       break;
 
     case 'commentPostSubmit':
@@ -157,7 +164,7 @@ function handleButtonEvent(target) {
       break;
 
     case 'updatePost':
-      console.log('UPDATE COMMENT', param)
+      console.log('UPDATE POST', param)
       break;
 
     default:
@@ -168,7 +175,6 @@ function handleButtonEvent(target) {
 
 // Comment on Blog Post
 async function commentOnPost(body) {
-  console.log('COMMENT ON POST', body)
   if (body == null) return;
 
   const response = await fetch('/api/blogs/comment', {
@@ -221,16 +227,17 @@ async function deleteComment(comment_id) {
 
 // Update Blog by Id
 async function updatePost(body) {
-  if (body == null) return;
-
+  if (body === null) return;
+  console.log('BODY', body)
   console.log('title, content: ', body.title, body.content);
   
-  const response = await fetch(`/api/blogs/${body.blog_id}`, {
+  const response = await fetch(`/api/blogs/${parseInt(body.blog_id)}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body
+    title: body.title,
+    content: body.content
   });
 
   if (response.ok) {
@@ -242,12 +249,15 @@ async function updatePost(body) {
 async function updateComment(body) {
   if (body.comment_id == null) return;
 
-  const response = await fetch(`/api/blogs/comment/${body.comment_id}`, {
+  console.log('updateComment BODY: ', body);
+  
+  const response = await fetch(`/api/blogs/comment/${parseInt(body.comment_id)}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body
+    blog_id: body.blog_id,
+    content: body.content
   });
 
   if (response.ok) {

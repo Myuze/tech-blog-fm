@@ -22,7 +22,7 @@ const updateCommentModal = document.getElementById('updateCommentModal');
 const updateCommentModalSubmit = document.getElementById('updateCommentModal');
 const commentformInputContent = document.getElementById('commentformInputContent');
 
-// Post Submit Handler
+// Create Post Submit Listener
 (postSubmit && postSubmit || modalPostSubmit && modalPostSubmit || homeNewPostBtn && homeNewPostBtn)
   .addEventListener('click', async (event) => {
     event.preventDefault();
@@ -51,95 +51,132 @@ const commentformInputContent = document.getElementById('commentformInputContent
     }
 });
 
-// // Post Comment Button Handler
-// commentModal.addEventListener('shown.bs.modal', (event) => {
-//   event.stopPropagation();
-//   // Set Modal Comment button to submit to the active blog
-//   const blog_id = event.relatedTarget.getAttribute('data-blog-id');
-//   commentPostBtn.setAttribute('data-blog-id', blog_id);
-//   commentPostSubmit.setAttribute('data-blog-id', blog_id);
-  
-//   // Create Comment Modal Listener
-//   commentPostSubmit && commentPostSubmit.addEventListener('click', async (event) => {
-//     event.preventDefault();
-//     if (event.target === null) return;
-    
-//     if (event.target.id === 'commentPostSubmit') {
-//       let content = commentformInputContent.value;
-//       await commentOnPost(blog_id, content);
-//     }
-//   });
-// });
-
+// Create Modal based on button clicked on a Blog post
 function handleModalPopup (modalType) {
   if (modalType === null) return;
 
   // Verify Modal Target
-  let modalId = modalType.getAttribute('data-bs-target').substring(1);
+  let modalId = modalType.getAttribute('data-bs-target');
+  modalId = (modalId !== null && modalId.startsWith('#')) ? modalId.substring(1) : modalId;
+  let modalEl = document.getElementById(modalId);
   const supportedModals = ['commentModal', 'updateCommentModal', 'updatePostModal'];
   if (!supportedModals.includes(modalId)) return;
 
-  // Get Blog or Comment ID to set modal submit targets
-  const blog_id = modalType.getAttribute('data-blog-id');
-  const comment_id = modalType.getAttribute('data-comment-id');
-
-  let modal = new bootstrap.Modal(document.getElementById(modalId));
-
+  // Create modal instance
+  let modal = new bootstrap.Modal(modalEl);
   modal.show()
-}
 
-function handleModalOpen (target) {
-  if (target === null) return;
-  let blog_id = target.getAttribute('data-blog-id');
-  let comment_id = target.getAttribute('data-comment-id');
-  console.log(blog_id)
-  console.log(comment_id)
-
-  switch (target.id) {
-    case 'postDelete':
-      deletePost(blog_id);
-      break;
-
-    case 'commentDelete':
-      deleteComment(comment_id);
-      break;
-    
-    case 'postUpdate':
-      updatePost(blog_id);
-      break;
-    
-    case 'commentUpdate':
-      updateComment(comment_id);
-      break;
-
-    default:
-      console.log(`Unhandled Target: ${target}`);
-      return false;
+  let id;
+  if (modalType.hasAttribute('data-blog-id')) {
+    id = modalType.getAttribute('data-blog-id')
+  } else {
+    id = modalType.getAttribute('data-comment-id')
   }
+  
+  modalEl.setAttribute('data-id', id);
+
+  // Create Modal Event Listener
+  modalEl && modalEl.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (event.target.type !== 'submit') return;
+    console.log('event: ', event);
+    let param = event.delegateTarget.getAttribute('data-id');
+    handleModalSubmit(event.target, param);
+  });
 };
 
 // Create Blog Post Listener
 postContainer[0] && postContainer[0].addEventListener('click', (event) => {
-  if (event.target.type !== 'button') return;
   event.preventDefault();
-  event.stopPropagation();
-  console.log(event)
-  handleModalPopup(event.target);  
+  if (event.target.type !== 'button') return;
+
+  handleModalPopup(event.target);
+  handleButtonEvent(event.target);
 });
 
+function handleModalSubmit (target, param) {
+  console.log('target.type: ', target.type);
+  console.log('param: ', param);
+  let body = {};
+
+  if (target === null || target.type !== 'submit') return;
+
+  switch (target.id) {
+    case 'updatePostModalSubmit':
+      body.blog_id = param;
+      body.title = formPostTitle.value;
+      body.content = formInputContent.value;
+      updatePost(JSON.stringify(body));
+      break;
+    
+    case 'updateCommentModalSubmit':
+      body.comment_id = param;
+      body.content = commentformInputContent.value;
+      updateComment(JSON.stringify(body));
+      break;
+
+    case 'commentPostSubmit':
+      body.blog_id = param;
+      body.content = commentformInputContent.value;
+      commentOnPost(JSON.stringify(body));
+      break;
+
+    default:
+      console.log(`Unhandled Target: ${target.id}`);
+      return false;
+  }
+};
+
+function handleButtonEvent(target) {
+  let param;
+  if (target.hasAttribute('data-blog-id')) {
+    param = target.getAttribute('data-blog-id');
+  } else if (target.hasAttribute('data-comment-id')) {
+    param = target.getAttribute('data-comment-id');
+  } else {
+    console.log('Unhandled Blog or Comment ID');
+  }
+  console.log('target.id', target.id)
+
+  switch (target.id) {
+    case 'postDelete':
+      console.log('POST DELETE', param)
+      deletePost(param);
+      break;
+    case 'commentDelete':
+      console.log('COMMENT DELETE', param)
+      deleteComment(param);
+      break;
+    
+    case 'postComment':
+      console.log('POST COMMENT', param)
+      break;
+    
+    case 'updateComment':
+      console.log('UPDATE COMMENT', param)
+      break;
+
+    case 'updatePost':
+      console.log('UPDATE COMMENT', param)
+      break;
+
+    default:
+      console.log('Unhandled Button', target.id, target.type)
+      break;
+  }
+}
+
 // Comment on Blog Post
-async function commentOnPost(blog_id, content) {
-  if (blog_id == null || content == '' || content == null) return;
+async function commentOnPost(body) {
+  console.log('COMMENT ON POST', body)
+  if (body == null) return;
 
   const response = await fetch('/api/blogs/comment', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      content,
-      blog_id
-    })
+    body
   });
 
   if (response.ok) {
@@ -183,22 +220,17 @@ async function deleteComment(comment_id) {
 };
 
 // Update Blog by Id
-async function updatePost(blog_id) {
-  if (blog_id == null) return;
+async function updatePost(body) {
+  if (body == null) return;
 
-  let title = formPostTitle.value;
-  let content = formPostTitle.value;
-
-  const response = await fetch(`/api/blogs/${blog_id}`, {
+  console.log('title, content: ', body.title, body.content);
+  
+  const response = await fetch(`/api/blogs/${body.blog_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      title,
-      content,
-      blog_id
-    })
+    body
   });
 
   if (response.ok) {
@@ -206,26 +238,19 @@ async function updatePost(blog_id) {
   }
 }
 
-// Update Blog by Id
-async function updateComment(comment_id) {
-  if (comment_id == null) return;
+// Update Blog Comment by Id
+async function updateComment(body) {
+  if (body.comment_id == null) return;
 
-  let title = formPostTitle.value;
-  let content = formPostTitle.value;
-
-  const response = await fetch(`/api/blogs/${comment_id}`, {
+  const response = await fetch(`/api/blogs/comment/${body.comment_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      title,
-      content,
-      comment_id
-    })
+    body
   });
 
   if (response.ok) {
-    document.location.reload();
+    // document.location.reload();
   }
 }

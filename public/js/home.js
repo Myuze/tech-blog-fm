@@ -6,6 +6,7 @@ const dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
 });
 
 // Dropdown Logout Handler
+const ddLogoutBtn = document.getElementById('ddLogoutBtn');
 ddLogoutBtn && ddLogoutBtn.addEventListener('click', async (event) => {
   event.preventDefault();
 

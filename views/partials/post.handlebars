@@ -8,9 +8,9 @@
     <div class="d-sm-flex flex-row justify-content-between card-footer p-2">
       {{#if loggedIn}}
       <div class="button-group">
-        <button id="postComment" class="btn btn-primary" data-blog-id="{{ id }}" data-bs-toggle="modal" data-bs-target="#commentModal" type="button">Comment</button>
+        <button id="postComment" class="btn btn-primary" data-blog-id="{{ id }}" data-bs-target="#commentModal" type="button">Comment</button>
         {{#if (if_user author_id user_id)}}
-        <button id="postUpdate" class="btn btn-primary" data-blog-id="{{ id }}" data-bs-toggle="modal" data-bs-target="#updatePostModal" type="button">Update</button>
+        <button id="postUpdate" class="btn btn-primary" data-blog-id="{{ id }}" data-bs-target="#updatePostModal" type="button">Update</button>
         <button id="postDelete" class="btn btn-primary" data-blog-id="{{ id }}" type="button">Delete</button>
         {{/if}}
       </div>
@@ -26,7 +26,7 @@
       <div class="d-flex flex-column-reverse mt-3 comment-container">
         {{#each comments as |comment|}}
         {{#if (if_commenter ../id comment.blog_id )}}
-        {{> comment loggedIn=../loggedIn username=Commenter.username content=content id=id author_id=../author_id user_id=../user_id}}
+        {{> comment loggedIn=../loggedIn username=Commenter.username content=content id=comment.id author_id=comment.author_id user_id=../user_id}}
         {{/if}}
         {{/each}}
       </div>

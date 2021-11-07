@@ -1,18 +1,13 @@
 const router = require('express').Router();
 const { Blog, Comment, User } = require('../models');
 const { withAuth } = require('../utils/auth');
+const { Op } = require('sequelize');
 
 router.get('/', withAuth, async (req, res) => {
   try {
     const { loggedIn, user_id, username } = req.session;
-    const blogData = await Blog.findAll({ 
-      include: { 
-        model: User,
-        as: 'Blogger',
-        attributes: ['username']
-      }
-    });
 
+    // Get all Comments
     const commentData = await Comment.findAll({
       include: {      
         model: User,
@@ -21,11 +16,37 @@ router.get('/', withAuth, async (req, res) => {
       }
     });
 
-    const blogs = blogData
-      .filter(blog => blog.author_id === user_id)
-      .map((blog) => blog.get({ plain: true }));
+    // Filter all active user's comments on blogs
+    const comments = commentData
+      .filter(comment => comment.author_id === user_id)
+      .map((comment) => comment.get({ plain: true }));
 
-    const comments = commentData.map((comment) => comment.get({ plain: true }));
+    // Store all blog_id of Blogs commented by user in array for query
+    let blogArray = [];
+    for (let i = 0; i < comments.length; i++) {
+      blogArray.push(comments[i].blog_id);
+    }
+
+    // Query all User's blogs and blogs user commented on
+    const userBlogData = await Blog.findAll({
+      where: {
+        [Op.or]: [
+          { author_id: user_id },
+          { id: {
+              [Op.or]: blogArray
+            }
+          }
+        ]
+      },
+      include: { 
+        model: User,
+        as: 'Blogger',
+        attributes: ['username']
+      }
+    });
+    
+    const blogs = userBlogData
+      .map((comment) => comment.get({ plain: true }));
 
     res.status(200).render('dashboard', { blogs, comments, loggedIn, username, user_id });
   } catch (err) {

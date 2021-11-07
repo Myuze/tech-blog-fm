@@ -231,7 +231,7 @@ async function updatePost(body) {
   console.log('BODY', body)
   console.log('title, content: ', body.title, body.content);
   
-  const response = await fetch(`/api/blogs/${parseInt(body.blog_id)}`, {
+  const response = await fetch(`/api/blogs/${body.blog_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -251,7 +251,7 @@ async function updateComment(body) {
 
   console.log('updateComment BODY: ', body);
   
-  const response = await fetch(`/api/blogs/comment/${parseInt(body.comment_id)}`, {
+  const response = await fetch(`/api/blogs/comment/${body.comment_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'

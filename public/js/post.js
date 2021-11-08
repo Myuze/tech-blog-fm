@@ -22,7 +22,7 @@ const commentPostSubmit = document.getElementById('commentPostSubmit');
 // Update Comment Elements
 const updateCommentModal = document.getElementById('updateCommentModal');
 const updateCommentModalSubmit = document.getElementById('updateCommentModal');
-const commentformInputContent = document.getElementById('commentformInputContent');
+const commentFormInputContent = document.getElementById('commentFormInputContent');
 const updateCommentFormInputContent = document.getElementById('updateCommentFormInputContent');
 
 // Create Post Submit Listener
@@ -123,7 +123,7 @@ function handleModalSubmit (target, param) {
 
     case 'commentPostSubmit':
       body.blog_id = param;
-      body.content = commentformInputContent.value;
+      body.content = commentFormInputContent.value;
       
       commentOnPost(JSON.stringify(body));
       break;

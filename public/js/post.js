@@ -251,6 +251,6 @@ async function updateComment(body) {
   });
 
   if (response.ok) {
-    // document.location.reload();
+    document.location.reload();
   }
 }

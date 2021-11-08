@@ -82,7 +82,7 @@ function handleModalPopup (modalType) {
   modalEl && modalEl.addEventListener('click', (event) => {
     event.preventDefault();
     if (event.target.type !== 'submit') return;
-    console.log('event: ', event);
+
     let param = event.delegateTarget.getAttribute('data-id');
     handleModalSubmit(event.target, param);
   });
@@ -98,27 +98,24 @@ postContainer[0] && postContainer[0].addEventListener('click', (event) => {
 });
 
 function handleModalSubmit (target, param) {
-  console.log('target.type: ', target.type);
-  console.log('param: ', param);
   let body = {};
 
   if (target === null || target.type !== 'submit') return;
 
   switch (target.id) {
     case 'updatePostModalSubmit':
-      console.log('updateFormInputContent.value, updateFormPostTitle.value: ', updateFormInputContent.value, updateFormPostTitle.value);
-      
       body.blog_id = param;
       body.author_id = param;
       body.title = updateFormPostTitle.value;
       body.content = updateFormInputContent.value;
-      console.log('body: ', body)
+
       updatePost(body);
       break;
     
     case 'updateCommentModalSubmit':
       body.comment_id = param;
-      body.content = commentformInputContent.value;
+      body.content = updateCommentformInputContent.value;
+      console.log(body)
       updateComment(body);
       break;
 
@@ -143,28 +140,22 @@ function handleButtonEvent(target) {
   } else {
     console.log('Unhandled Blog or Comment ID');
   }
-  console.log('target.id', target.id)
 
   switch (target.id) {
     case 'postDelete':
-      console.log('POST DELETE', param)
       deletePost(param);
       break;
     case 'commentDelete':
-      console.log('COMMENT DELETE', param)
       deleteComment(param);
       break;
     
     case 'postComment':
-      console.log('POST COMMENT', param)
       break;
     
     case 'updateComment':
-      console.log('UPDATE COMMENT', param)
       break;
 
     case 'updatePost':
-      console.log('UPDATE POST', param)
       break;
 
     default:
@@ -228,16 +219,16 @@ async function deleteComment(comment_id) {
 // Update Blog by Id
 async function updatePost(body) {
   if (body === null) return;
-  console.log('BODY', body)
-  console.log('title, content: ', body.title, body.content);
   
   const response = await fetch(`/api/blogs/${body.blog_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    title: body.title,
-    content: body.content
+    body: JSON.stringify({
+      title: body.title,
+      content: body.content
+    })
   });
 
   if (response.ok) {
@@ -249,15 +240,14 @@ async function updatePost(body) {
 async function updateComment(body) {
   if (body.comment_id == null) return;
 
-  console.log('updateComment BODY: ', body);
-  
   const response = await fetch(`/api/blogs/comment/${body.comment_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    blog_id: body.blog_id,
-    content: body.content
+    body: JSON.stringify({
+      content: body.content
+    })
   });
 
   if (response.ok) {

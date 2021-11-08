@@ -97,6 +97,7 @@ postContainer[0] && postContainer[0].addEventListener('click', (event) => {
   handleButtonEvent(event.target);
 });
 
+// Handle Modal Button Submission dependent on modal
 function handleModalSubmit (target, param) {
   let body = {};
 
@@ -114,14 +115,16 @@ function handleModalSubmit (target, param) {
     
     case 'updateCommentModalSubmit':
       body.comment_id = param;
-      body.content = updateCommentformInputContent.value;
+      body.content = updateCommentFormInputContent.value;
       console.log(body)
+
       updateComment(body);
       break;
 
     case 'commentPostSubmit':
       body.blog_id = param;
       body.content = commentformInputContent.value;
+      
       commentOnPost(JSON.stringify(body));
       break;
 

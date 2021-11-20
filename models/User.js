@@ -35,8 +35,10 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      isEmail: true,
-      notEmpty: true
+      validate: {
+        isEmail: true,
+        notEmpty: true
+      }
     }
   },
   {

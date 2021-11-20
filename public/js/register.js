@@ -29,12 +29,22 @@ registerSubmit && registerSubmit.addEventListener('click', async (event) => {
     registerResult.classList.add('error');
     registerResult.innerHTML = 'Your password cannot be blank, please try again.';
     return;
-    
+
+  } else if (password.length < 8) {
+    registerResult.classList.add('error');
+    registerResult.innerHTML = 'Your password must be at least 8 characters.';
+    return;
+      
   } else if (username === null || username == '' || email == '' || email == null) {
     registerResult.classList.add('error');
     registerResult.innerHTML = "Username or Email cannot be empty";
     return;
-
+    
+  } else if (username.length < 4) {
+    registerResult.classList.add('error');
+    registerResult.innerHTML = "Username must be at least 4 characters.";
+    return;
+  
   } else {
     const response = await fetch('/api/users/register', {
       method: 'POST',
@@ -51,7 +61,8 @@ registerSubmit && registerSubmit.addEventListener('click', async (event) => {
     if (response.ok) {
       document.location.replace('/');
     } else {
-      confirmResult.innerHTML = response.status;
+      console.log('RESPONSE', response)
+      confirmResult.innerHTML = response.json(err);
       return;
     }
   }

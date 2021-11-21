@@ -57,12 +57,29 @@ registerSubmit && registerSubmit.addEventListener('click', async (event) => {
         password
       })
     });
-  
+    
     if (response.ok) {
       document.location.replace('/');
     } else {
-      console.log('RESPONSE', response)
-      confirmResult.innerHTML = response.json(err);
+      const { errors } = await response.json()
+      let errorMessage;
+      console.log('ERROR', errors[0])
+      
+      switch (errors[0].validatorKey) {
+        case 'not_unique':
+          errorMessage = 'Username or Email already exists.'
+          break;
+        case 'isEmail':
+          errorMessage = 'You must use a valid Email address.'
+          break;
+        default:
+          console.log(`Unhandled message: ${errors[0].message}`);
+          errorMessage = errors[0].message;
+          break;
+      }
+
+      registerResult.classList.add('error');
+      registerResult.innerHTML = errorMessage;
       return;
     }
   }

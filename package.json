@@ -1,0 +1,26 @@
+{
+  "name": "tech-blog-fm",
+  "version": "1.0.0",
+  "description": "## Description:",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "build": "cd client && npm run build",
+    "seed": "node server/seeds/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Myuze/tech-blog-fm.git"
+  },
+  "author": "flmeneses.dev@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Myuze/tech-blog-fm/issues"
+  },
+  "homepage": "https://github.com/Myuze/tech-blog-fm#readme",
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "sass-w": "sass --watch scss:public/css",
+    "sass-w": "sass --watch scss:../client/public --no-source-map",
     "seed": "node seeds/seed.js"
   },
   "repository": {

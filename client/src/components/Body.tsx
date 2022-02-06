@@ -1,4 +1,31 @@
-import React from 'react';
+import Post from '../components/Post';
+
+let loggedIn = true;
+
+const motd = <p className='card-text'>Login to post a blog.</p>;
+const loginButton = (
+  <div className='d-grid gap-2 col-6 mt-5 mx-auto'>
+    <button
+      id='homeLoginBtn'
+      className='btn btn-primary'
+      data-bs-toggle='modal'
+      data-bs-target='#loginModal'
+      type='button'
+    >
+      Login
+    </button>
+  </div>
+);
+const postButton = (
+  <button
+    id='homeNewPostBtn'
+    className='btn btn-primary d-grid gap-2 col-6 mt-3 mx-auto'
+    data-bs-toggle='modal'
+    data-bs-target='#postModal'
+  >
+    New Post
+  </button>
+);
 
 export default function Body() {
   return (
@@ -14,28 +41,18 @@ export default function Body() {
           </div>
           <div className='card-body mb-3'>
             <h1 className='card-title'>Welcome to Tech Blog FM</h1>
-            {/* {{#unless loggedIn}}
-                <p className="card-text">Login to post a blog.</p>
-                {{/unless}} */}
+            {loggedIn ? motd : null}
           </div>
         </div>
-        {/* {{#unless loggedIn}} */}
-        {/* <div className="d-grid gap-2 col-6 mt-5 mx-auto">
-          <button id="homeLoginBtn" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" type="button">Login</button>
-      </div> */}
-        {/* {{/unless}} */}
+        {loggedIn ? loginButton : null}
       </section>
       <section>
         <div className='d-grid col12'>
           <h2 className='mt-3 p-3'>Latest Posts</h2>
-          {/* {{#if loggedIn}}
-              <button id="homeNewPostBtn" className="btn btn-primary d-grid gap-2 col-6 mt-3 mx-auto" data-bs-toggle="modal" data-bs-target="#postModal">New Post</button>
-              {{/if}} */}
+          {loggedIn ? postButton : null}
         </div>
         <div className='d-flex flex-column-reverse mt-3 post-container'>
-          {/* {{#each blogs as |blog| }}
-              {{> post loggedIn=../loggedIn user_id=../user_id comments=../comments}}
-              {{/each}} */}
+          <Post loggedIn={true} id='MY' title='MyTitle' />
         </div>
       </section>
     </main>

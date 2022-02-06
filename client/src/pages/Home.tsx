@@ -1,5 +1,3 @@
-import React from 'react';
-
 import '../scss/main.scss';
 
 import Body from '../components/Body';

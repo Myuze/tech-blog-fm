@@ -47,6 +47,10 @@ export default function Post(props: any) {
     width: '90%',
   };
 
+  let content = 'This is my Content!';
+
+  let commentList = ['Myuze', 'Eywnn', 'Ayrlynn'];
+
   return (
     <div className='card my-3 mx-auto' data-blog-id={props.id} style={style}>
       <div className='card-body p-0'>
@@ -65,7 +69,9 @@ export default function Post(props: any) {
         <section>
           <h5 className='p-2'>Comments:</h5>
           <div className='d-flex flex-column-reverse mt-3 comment-container'>
-            <Comment />
+            {commentList.map((username, i) => (
+              <Comment key={i} username={username} content={content} />
+            ))}
           </div>
         </section>
       </div>

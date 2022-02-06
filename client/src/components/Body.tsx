@@ -27,6 +27,10 @@ const postButton = (
   </button>
 );
 
+let content = 'This is my Post!';
+
+let postList = ['Florian', 'Ayrlynn', 'Eywnn'];
+
 export default function Body() {
   return (
     <main>
@@ -52,7 +56,9 @@ export default function Body() {
           {loggedIn ? postButton : null}
         </div>
         <div className='d-flex flex-column-reverse mt-3 post-container'>
-          <Post loggedIn={true} id='MY' title='MyTitle' />
+          {postList.map((username, i) => (
+            <Post loggedIn={true} id='MY' title={username} content={content} />
+          ))}
         </div>
       </section>
     </main>

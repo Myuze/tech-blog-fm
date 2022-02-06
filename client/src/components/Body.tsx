@@ -1,37 +1,57 @@
+import { useState, useEffect } from 'react';
+
 import Post from '../components/Post';
-
-let loggedIn = true;
-
-const motd = <p className='card-text'>Login to post a blog.</p>;
-const loginButton = (
-  <div className='d-grid gap-2 col-6 mt-5 mx-auto'>
-    <button
-      id='homeLoginBtn'
-      className='btn btn-primary'
-      data-bs-toggle='modal'
-      data-bs-target='#loginModal'
-      type='button'
-    >
-      Login
-    </button>
-  </div>
-);
-const postButton = (
-  <button
-    id='homeNewPostBtn'
-    className='btn btn-primary d-grid gap-2 col-6 mt-3 mx-auto'
-    data-bs-toggle='modal'
-    data-bs-target='#postModal'
-  >
-    New Post
-  </button>
-);
-
-let content = 'This is my Post!';
-
-let postList = ['Florian', 'Ayrlynn', 'Eywnn'];
+import axios from 'axios';
 
 export default function Body() {
+  let loggedIn = true;
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    let ignore = false;
+    async function fetchData() {
+      const result = await axios.get('/api/blogs');
+      console.log('Results:', result.data);
+      if (!ignore) setBlogs(result.data);
+    }
+
+    fetchData();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const motd = <p className='card-text'>Login to post a blog.</p>;
+  const loginButton = (
+    <div className='d-grid gap-2 col-6 mt-5 mx-auto'>
+      <button
+        id='homeLoginBtn'
+        className='btn btn-primary'
+        data-bs-toggle='modal'
+        data-bs-target='#loginModal'
+        type='button'
+      >
+        Login
+      </button>
+    </div>
+  );
+
+  const postButton = (
+    <button
+      id='homeNewPostBtn'
+      className='btn btn-primary d-grid gap-2 col-6 mt-3 mx-auto'
+      data-bs-toggle='modal'
+      data-bs-target='#postModal'
+    >
+      New Post
+    </button>
+  );
+
+  let content = 'This is my Post!';
+
+  // let postList = ['Florian', 'Ayrlynn', 'Eywnn'];
+
   return (
     <main>
       <section>
@@ -56,8 +76,15 @@ export default function Body() {
           {loggedIn ? postButton : null}
         </div>
         <div className='d-flex flex-column-reverse mt-3 post-container'>
-          {postList.map((username, i) => (
-            <Post loggedIn={true} id='MY' title={username} content={content} />
+          {blogs.map((blog: any, i) => (
+            <Post
+              key={i}
+              loggedIn={true}
+              id={blog.id}
+              title={blog.title}
+              content={blog.content}
+              updatedAt={blog.updatedAt}
+            />
           ))}
         </div>
       </section>

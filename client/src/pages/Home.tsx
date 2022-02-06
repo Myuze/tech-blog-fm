@@ -45,9 +45,7 @@ export default function Home(props: any) {
           </div>
         </div>
       </nav>
-      <body>
-        <Body />
-      </body>
+      <Body />
     </div>
   );
 }

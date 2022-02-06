@@ -1,0 +1,40 @@
+export default function Comment(props: any) {
+  const buttonGroup = (
+    <div className='button-group'>
+      <button
+        id='commentUpdate'
+        className='btn btn-primary'
+        data-comment-id={props.id}
+        data-bs-target='#updateCommentModal'
+        type='button'
+      >
+        Update
+      </button>
+      <button
+        id='commentDelete'
+        className='btn btn-primary'
+        data-comment-id={props.id}
+        type='button'
+      >
+        Delete
+      </button>
+    </div>
+  );
+
+  return (
+    <div className='card my-3 mx-auto'>
+      <div className='card-body p-0'>
+        <section>
+          <h5 className='card-header bg-info'>{props.username}</h5>
+          <p className='card-text p-3'>{props.content}</p>
+          <p className='card-text mb-0 p-0 card-footer'>
+            <div className='d-sm-flex p-2 justify-content-between'>
+              {buttonGroup}
+              Comment Date: {props.updatedAt}
+            </div>
+          </p>
+        </section>
+      </div>
+    </div>
+  );
+}

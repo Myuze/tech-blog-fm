@@ -114,7 +114,7 @@ router.delete('/:id', apiAuth, async (req, res) => {
 });
 
 // Get Comments
-router.get('/comments', apiAuth, async (req, res) => {
+router.get('/comments', async (req, res) => {
   try {
     const comment = await Comment.findAll({
       include: {

@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import { CommentState } from '../comments/commentSlice';
+
 import fetchPosts from './postAPI';
 
 export interface PostState {
@@ -7,6 +9,7 @@ export interface PostState {
   title: string;
   content: string;
   author_id: string;
+  comments: [number];
   status: 'idle' | 'loading' | 'failed';
 }
 
@@ -15,6 +18,7 @@ const initialState: PostState = {
   title: '',
   content: '',
   author_id: '',
+  comments: [NaN],
   status: 'idle',
 };
 
@@ -34,12 +38,15 @@ export const postSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    updateContent: (state) => {
+    addComment: (state, action: PayloadAction<CommentState>) => {
+      state.comments.push(action.payload.id);
+    },
+    updateContent: (state, action: PayloadAction<PostState>) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.content += 'This is new updated Content!';
+      state.content = action.payload.content;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,

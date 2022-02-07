@@ -1,4 +1,4 @@
-import Comment from '../../components/Comment';
+import Comment from '../comments/Comment';
 export default function Post(props: any) {
   const commentButton = (
     <button

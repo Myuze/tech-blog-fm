@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 
-import Post from '../components/Post';
+import Post from '../features/posts/Post';
 import axios from 'axios';
-import BaseModal from './BaseModal';
 
-export default function Body() {
+import BaseModal from '../features/baseModal/BaseModal';
+
+export default function Body(props: any) {
   let loggedIn = true;
 
   const [blogs, setBlogs] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
+  // Fetch Blog Posts on load
   useEffect(() => {
     let ignore = false;
     async function fetchData() {
@@ -24,11 +26,6 @@ export default function Body() {
     };
   }, []);
 
-  function handleLogin() {
-    console.log('handleLogin');
-    setShowModal(!showModal);
-  }
-
   const motd = <p className='card-text'>Login to post a blog.</p>;
   const loginButton = (
     <div className='d-grid gap-2 col-6 mt-5 mx-auto'>
@@ -38,7 +35,7 @@ export default function Body() {
         data-bs-toggle='modal'
         data-bs-target='#loginModal'
         type='button'
-        onClick={handleLogin}
+        onClick={props.handleLogin}
       >
         Login
       </button>
@@ -96,7 +93,7 @@ export default function Body() {
           ))}
         </div>
       </section>
-      {showModal ? <BaseModal /> : null}
+      {showModal ? <BaseModal setShowModal={setShowModal} /> : null}
     </main>
   );
 }

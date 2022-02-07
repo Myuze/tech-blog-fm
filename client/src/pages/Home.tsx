@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 import '../scss/main.scss';
 
 import Body from '../components/Body';
 
 export default function Home(props: any) {
+  const [showModal, setShowModal] = useState(false);
   const register = (
     <a href='/register'>
       <button className='btn btn-primary'>Register</button>
@@ -22,10 +25,16 @@ export default function Home(props: any) {
       data-bs-toggle='modal'
       data-bs-target='#loginModal'
       type='button'
+      onClick={handleLogin}
     >
       Login
     </button>
   );
+
+  function handleLogin() {
+    console.log('handleLogin');
+    setShowModal(!showModal);
+  }
 
   return (
     <div>
@@ -45,7 +54,7 @@ export default function Home(props: any) {
           </div>
         </div>
       </nav>
-      <Body />
+      <Body handleLogin={handleLogin} />
     </div>
   );
 }

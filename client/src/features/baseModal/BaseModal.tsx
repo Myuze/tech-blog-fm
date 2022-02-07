@@ -1,7 +1,9 @@
-import LoginForm from './LoginForm';
+import ReactDom from 'react-dom';
+import LoginForm from '../../components/LoginForm';
 
-export default function BaseModal() {
-  return (
+export default function BaseModal({ setShowModal }: any) {
+  const portalDiv: any = document.getElementById('login');
+  return ReactDom.createPortal(
     <div
       className='modal fade'
       id='loginModal'
@@ -34,6 +36,7 @@ export default function BaseModal() {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    portalDiv
   );
 }

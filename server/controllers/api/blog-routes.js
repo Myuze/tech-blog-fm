@@ -45,7 +45,7 @@ router.post('/post', apiAuth, async (req, res) => {
 });
 
 // Get Blog post by id
-router.get('/:id', apiAuth, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const dbBlogPost = await Blog.findOne({
       where: {

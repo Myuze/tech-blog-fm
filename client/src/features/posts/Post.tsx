@@ -1,5 +1,11 @@
+import { useAppDispatch } from '../../app/hooks';
+
 import Comment from '../comments/Comment';
+import { blogsFetch } from './postSlice';
+
 export default function Post(props: any) {
+  const dispatch = useAppDispatch();
+
   const commentButton = (
     <button
       id='postComment'
@@ -19,6 +25,7 @@ export default function Post(props: any) {
       data-blog-id={`${props.id}`}
       data-bs-target='#updatePostModal'
       type='button'
+      onClick={() => dispatch(blogsFetch())}
     >
       Update
     </button>

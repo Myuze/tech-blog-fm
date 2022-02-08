@@ -18,27 +18,18 @@ const initialState: CommentState = {
   status: 'idle',
 };
 
-export const commentFetchAsync = createAsyncThunk(
-  'comment/fetchComment',
-  async () => {
-    const response = await fetchComments();
-
-    return response.data;
-  }
-);
-
 export const commentSlice = createSlice({
   name: 'comment',
   initialState,
   reducers: {
     addComment: (state, action: PayloadAction<CommentState>) => {
-      state = action.payload;
+      if (state.id === action.payload.id) state = action.payload;
     },
-  },
+  }
 });
 
 export const { addComment } = commentSlice.actions;
 
-export const selectComment = (state: CommentState) => state.id;
+export const selectComment = (state: RootState) => state.comment;
 
 export default commentSlice.reducer;

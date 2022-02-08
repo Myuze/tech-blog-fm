@@ -3,6 +3,7 @@ import { RootState } from '../../app/store';
 import { CommentState } from '../comments/commentSlice';
 
 import fetchPosts from './postAPI';
+import fetchComments from '../comments/commentAPI';
 
 export interface PostState {
   id: number;
@@ -32,6 +33,15 @@ export const blogsFetch = createAsyncThunk('post/fetchPost', async () => {
   return response.data;
 });
 
+export const commentFetchAsync = createAsyncThunk(
+  'comment/fetchComment',
+  async () => {
+    const response = await fetchComments();
+
+    return response.data;
+  }
+);
+
 export const postSlice = createSlice({
   name: 'post',
   initialState,
@@ -56,7 +66,18 @@ export const postSlice = createSlice({
       })
       .addCase(blogsFetch.rejected, (state) => {
         state.status = 'failed';
-      });
+      })
+      .addCase(commentFetchAsync.pending, (state, action) => {
+      state.status = 'loading'
+    })
+      .addCase(commentFetchAsync.rejected, (state, action) => {
+      state.status = 'failed'
+    })
+      .addCase(commentFetchAsync.fulfilled, (state, action) => {
+      state.status = 'idle'
+      state = action.payload
+    })
+    
   },
 });
 

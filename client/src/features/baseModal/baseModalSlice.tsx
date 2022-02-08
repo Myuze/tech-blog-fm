@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 
 export interface BaseModalState {
   id: string;
@@ -17,14 +18,15 @@ export const baseModalSlice = createSlice({
   name: 'baseModal',
   initialState,
   reducers: {
-    updateHeaderText: (state, action: PayloadAction<string>) => {
-      state.headerText = action.payload;
+    updateModal: (state, action: PayloadAction<BaseModalState>) => {
+      state = action.payload;
     },
   },
 });
 
-export const { updateHeaderText } = baseModalSlice.actions;
+export const { updateModal } = baseModalSlice.actions;
 
-export const selectType = (state: BaseModalState) => state.headerText;
+export const selectModalType = (state: RootState) => state.baseModal.type;
+export const selectModalId = (state: RootState) => state.baseModal.id;
 
 export default baseModalSlice.reducer;

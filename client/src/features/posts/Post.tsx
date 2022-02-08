@@ -2,9 +2,13 @@ import { useAppDispatch } from '../../app/hooks';
 
 import Comment from '../comments/Comment';
 import { blogsFetch } from './postSlice';
+import { useGetBlogsQuery } from '../../app/blogAPI';
 
 export default function Post(props: any) {
   const dispatch = useAppDispatch();
+  const { data, error, isLoading } = useGetBlogsQuery();
+
+  console.log(data)
 
   const commentButton = (
     <button
@@ -68,8 +72,8 @@ export default function Post(props: any) {
         <div className='d-sm-flex flex-row justify-content-between card-footer p-2'>
           {buttonGroup}
           <div className='d-sm-flex justify-content-between'>
-            <p className='card-text px-2'>Author: {props.username}</p>
-            <p className='card-text px-2'>Created: {props.updatedAt}</p>
+            <div className='card-text px-2'>Author: {props.username}</div>
+            <div className='card-text px-2'>Created: {props.updatedAt}</div>
           </div>
         </div>
         <hr className='mt-0' />

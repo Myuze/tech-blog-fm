@@ -30,13 +30,13 @@ export default function Comment(props: any) {
       <div className='card-body p-0'>
         <section>
           <h5 className='card-header bg-info'>{props.username}</h5>
-          <p className='card-text p-3'>{props.content}</p>
-          <p className='card-text mb-0 p-0 card-footer'>
+          <div className='card-text p-3'>{props.content}</div>
+          <div className='card-text mb-0 p-0 card-footer'>
             <div className='d-sm-flex p-2 justify-content-between'>
               {buttonGroup}
               Comment Date: {props.updatedAt}
             </div>
-          </p>
+          </div>
         </section>
       </div>
     </div>

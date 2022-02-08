@@ -10,7 +10,7 @@ export default async function fetchPosts() {
   }
 }
 
-export async function fetchUserPosts(userId: Number) {
+export async function fetchUserPosts(userId: number) {
   try {
     const result = await axios.get(`api/${userId}`);
     if (result.status !== 200) console.log(result.statusText);

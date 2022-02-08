@@ -54,31 +54,6 @@ export const postSlice = createSlice({
       state.content = action.payload.content;
     },
   },
-
-  extraReducers: (builder) => {
-    builder
-      .addCase(blogsFetch.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(blogsFetch.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state += action.payload;
-      })
-      .addCase(blogsFetch.rejected, (state) => {
-        state.status = 'failed';
-      })
-      .addCase(commentFetchAsync.pending, (state, action) => {
-      state.status = 'loading'
-    })
-      .addCase(commentFetchAsync.rejected, (state, action) => {
-      state.status = 'failed'
-    })
-      .addCase(commentFetchAsync.fulfilled, (state, action) => {
-      state.status = 'idle'
-      state = action.payload
-    })
-    
-  },
 });
 
 export const { updateContent } = postSlice.actions;
